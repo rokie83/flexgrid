@@ -138,18 +138,14 @@ gulp.task('create-new-tag', (cb) => {
             return cb(error);
         }
     });
-    return git.push('origin', 'master', {args: '--tags'}, cb);
+    git.push('origin', 'master', {args: '--tags'}, cb);
 });
 
 /**
  * Push changes to master branch
  */
 gulp.task('push-changes', (cb) => {
-    return git.push('origin', 'master', (error) => {
-        if (error) {
-            return cb(error);
-        }
-    });
+    git.push('origin', 'master', cb);
 });
 
 gulp.task('finished', () => {
