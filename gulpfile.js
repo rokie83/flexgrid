@@ -79,7 +79,6 @@ gulp.task('update-packagejson', () => {
     }
 });
 
-
 /**
  *  Deletes the dist directory
  */
@@ -155,7 +154,6 @@ gulp.task('finished', () => {
 
     `);
 });
-
 
 gulp.task('release', () => {
     runSequence(
