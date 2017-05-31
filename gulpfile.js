@@ -2,72 +2,14 @@ const gulp = require('gulp');
 const del = require('del');
 const runSequence = require('run-sequence');
 const conventionalChangelog = require('gulp-conventional-changelog');
-//const ngc = require('@angular/compiler-cli/src/main').main;
-//const inlineResources = require('./scripts/inline-resources');
-//const autoprefixer = require('gulp-autoprefixer');
 
-// const moduleResources = [
-//     'src/common/assets/**/*',
-//     'src/common/README.md',
-//     'src/common/package.json',
-//     'src/flexgrid/**/*',
-//     'src/design/**/*',
-//     'src/material-custom/**/*'
-// ];
-//
-// /**
-//  *  Run the Angular compiler, ngc. This will output all
-//  *  compiled modules to the /dist folder.
-//  */
-// gulp.task('ngc', () => {
-//     return ngc({
-//         project: 'src/common/tsconfig.aot.json'
-//     });
-// });
-//
-// /**
-//  *  Copy all relevant resource files.
-//  */
-// gulp.task('copy-resources', () => {
-//     return gulp.src(moduleResources, {'base': './src'})
-//         .pipe(gulp.dest('dist'));
-// });
-//
-// /**
-//  *  Copy html files into dist/common/components.
-//  */
-// gulp.task('copy-html', () => {
-//     return gulp.src('src/common/components/**/*.html')
-//         .pipe(gulp.dest('dist/common/components'));
-// });
-//
-// /**
-//  *  Compile scss into css and copy those files into dist/common/components.
-//  */
-// gulp.task('compile-scss-copy-css', () => {
-//     return gulp.src('src/common/components/**/*.scss')
-//         .pipe(sass().on('error', sass.logError))
-//         .pipe(autoprefixer())
-//         .pipe(gulp.dest('dist/common/components'));
-// });
-//
-// /**
-//  *  Inline template (.html) and style (.css) files into the the component .ts files.
-//  */
-// gulp.task('inline-resources', () => inlineResources('dist/common/components'));
-//
-//
-// gulp.task('compile', () => {
-//     runSequence(
-//         'ngc',
-//         'copy-resources',
-//         'copy-html',
-//         'compile-scss-copy-css',
-//         'inline-resources'
-//     )
-// });
+const includedFiles = [
+    'src/flexgrid/**/*'
+];
 
-//gulp.task('create-packages', ['compile']);
+const excludedFiles = [
+    'src/flexgrid/_grid-demo.scss'
+];
 
 /**
  * generate changelog based on the
@@ -92,10 +34,10 @@ gulp.task('clean', () => {
 });
 
 /**
- *  Copy all relevant resource files.
+ *  Copy all relevant resource files
  */
 gulp.task('copy-files', () => {
-    return gulp.src(['!src/flexgrid/_grid-demo.scss', 'src/flexgrid/**/*'])
+    return gulp.src([`!${excludedFiles}`, `${includedFiles}`])
         .pipe(gulp.dest('dist'));
 });
 
