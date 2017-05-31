@@ -1,5 +1,5 @@
-<a name=""></a>
-#  (2017-05-31)
+<a name="0.0.3"></a>
+## 0.0.3 (2017-05-31)
 
 
 ### Bug Fixes
@@ -11,6 +11,7 @@
 
 ### Features
 
+* **gulp:** Added semVer tasks and changes ([6ce63c2](https://github.com/rokie83/flexgrid/commit/6ce63c2))
 * **setup:** Added CHANGELOG.md ([14c8479](https://github.com/rokie83/flexgrid/commit/14c8479))
 
 
