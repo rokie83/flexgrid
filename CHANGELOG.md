@@ -4,12 +4,13 @@
 
 ### Bug Fixes
 
-* **gulp:** Added buffer property ([f65f683](https://bitbucket.org/easysys/ng_bexio_components/commits/f65f683))
+* **gulp:** Added buffer property ([f65f683](https://github.com/rokie83/flexgrid/commit/f65f683))
+* **package:** Adjusted repository properties ([3db6eed](https://github.com/rokie83/flexgrid/commit/3db6eed))
 
 
 ### Features
 
-* **setup:** Added CHANGELOG.md ([14c8479](https://bitbucket.org/easysys/ng_bexio_components/commits/14c8479))
+* **setup:** Added CHANGELOG.md ([14c8479](https://github.com/rokie83/flexgrid/commit/14c8479))
 
 
 
