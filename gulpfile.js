@@ -2,6 +2,7 @@ const fs = require('fs');
 const del = require('del');
 const gulp = require('gulp');
 const bump = require('gulp-bump');
+const shell = require('gulp-shell')
 const git = require('gulp-git');
 const gutil = require("gulp-util");
 const argv = require('yargs').argv;
@@ -56,6 +57,13 @@ let getPackageJsonVersion = () => {
 };
 
 /**
+ * Execute linting and testing tasks to validate the package
+ */
+gulp.task('validate', shell.task([
+    'npm run scss-lint'
+]));
+
+/**
  * Update package.json version depending on argument
  */
 gulp.task('update-packagejson', () => {
@@ -103,6 +111,13 @@ gulp.task('copy-files', () => {
 });
 
 /**
+ * Publish package to npm
+ */
+gulp.task('npm-publish', shell.task([
+    'cd dist && npm publish --access=public"'
+]));
+
+/**
  * Commit changes for the release
  */
 gulp.task('commit-changes', () => {
@@ -129,7 +144,11 @@ gulp.task('create-new-tag', (cb) => {
  * Push changes to master branch
  */
 gulp.task('push-changes', (cb) => {
-    return git.push('origin', 'master', cb);
+    return git.push('origin', 'master', (error) => {
+        if (error) {
+            return cb(error);
+        }
+    });
 });
 
 gulp.task('finished', () => {
@@ -143,10 +162,12 @@ gulp.task('finished', () => {
 
 gulp.task('release', () => {
     runSequence(
+        'validate',
         'update-packagejson',
         'write-changelog',
         'clean',
         'copy-files',
+        'npm-publish',
         'commit-changes',
         'create-new-tag',
         'push-changes',
