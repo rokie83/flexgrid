@@ -1,0 +1,20 @@
+$container-min-width: 94.0rem !default;  // office base min width
+$container-max-width: 137.0rem !default; // office base max width
+
+$grid-max-column: 12 !default;
+$grid-breakpoints: (
+    xs: 0,                      // tiny devices         [phone portrait]
+    sm: 544px,                  // small devices        [phone landscape]
+    md: 768px,                  // medium devices       [tablets]
+    lg: 992px,                  // large devices        [desktop]
+    xl: 1429px                  // extra large devices  [...the future]
+) !default;
+$container-max-widths: (
+    sm: 576px,
+    md: 720px,
+    lg: 940px,
+    xl: 1140px
+) !default;
+$base-unit: 0.4rem;             // 4px  (smallest unit)
+$base-v-gap: (8 * $base-unit);  // temp base vertical (bottom) gap
+$base-h-gap: (4 * $base-unit);  // temp base horizontal (side) gap

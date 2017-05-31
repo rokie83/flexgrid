@@ -1,0 +1,283 @@
+// grid system placeholder
+@import "flexgrid.variables";
+
+$grid-label: "grid";
+$grid-cell-label: "cell";
+$grid-gap-label: "grid-gap";
+$grid-flex-label: "grid-flex";
+$grid-shrink-label: "cell-shrink";
+$grid-wrapper: "wrapper";
+
+$grid-zero-margin: 0;
+$grid-zero-padding: 0;
+
+$grid-gap-without-bottom-padding: "no-bottom-gap";
+
+$grid-margin: $base-v-gap, $base-h-gap;
+$gird-cell-padding: $base-v-gap, $base-h-gap;
+
+// [base]
+
+%grid {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    margin: $grid-zero-margin;
+    padding: $grid-zero-padding;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+%grid-cell {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+%shrink {
+    flex: none;
+    max-width: 100%;
+}
+
+//
+//
+//
+//
+// grid [base, placeholders and mixins]
+
+// grid gap [grid base]
+
+// sass-lint:disable variable-for-property
+
+@mixin grid-cell-margins($unit) {
+    // nth($_unit, 1) => vertical gap [$_base-v-gap]
+    // nth($_unit, 2) => vertical gap [$_base-h-gap]
+    margin: 0 0 0 (0 - nth($unit, 2));
+}
+
+// grid alignments [grid base]
+
+%grid-left {
+    justify-content: flex-start;
+}
+
+%grid-center {
+    justify-content: center;
+}
+
+%grid-right {
+    justify-content: flex-end;
+}
+
+%grid-top {
+    align-items: flex-start;
+}
+
+%grid-middle {
+    align-items: center;
+}
+
+%grid-bottom {
+    align-items: flex-end;
+}
+
+// all cells share same height [grid base]
+
+%flex {
+    display: flex;
+}
+
+// grid alignment [grid modifier]
+
+@mixin grid-alignments() {
+    &.left {
+        @extend %grid-left;
+    }
+
+    &.center {
+        @extend %grid-center;
+    }
+
+    &.right {
+        @extend %grid-right;
+    }
+
+    &.top {
+        @extend %grid-top;
+    }
+
+    &.middle {
+        @extend %grid-middle;
+    }
+
+    &.bottom {
+        @extend %grid-bottom;
+    }
+}
+
+// additional grid modifier [grid modifier]
+
+%grid-gap {
+    @include grid-cell-margins($grid-margin);
+}
+
+%grid-flex {
+    > .grid-cell {
+        @extend %flex;
+    }
+}
+
+//
+//
+//
+//
+// grid-cell [base, placeholders and mixins]
+
+@mixin grid-cell-paddings($unit, $has-no-bottom-padding) {
+    // nth($_unit, 1) => vertical gap [$_base-v-gap]
+    // nth($_unit, 2) => vertical gap [$_base-h-gap]
+    padding: 0 0 nth($unit, 1) nth($unit, 2);
+
+    @if ($has-no-bottom-padding == "no-bottom-padding") {
+        padding: 0 0 0 nth($unit, 2);
+    }
+}
+
+// cell alignments [grid-cell base]
+
+%cell-left {
+    display: inherit;
+    margin-right: auto;
+}
+
+%cell-center {
+    display: inherit;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+%cell-right {
+    display: inherit;
+    margin-left: auto;
+}
+
+%cell-top {
+    display: inherit;
+    margin-bottom: auto;
+}
+
+%cell-middle {
+    display: inherit;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+%cell-bottom {
+    display: inherit;
+    margin-top: auto;
+}
+
+// grid-cell alignment [grid-cell modifier]
+
+@mixin grid-cell-display($position) {
+    @if ($position == flex) {
+        @extend %flex;
+    } @else {
+        @if ($position == false) {
+            &.#{$grid-shrink-label} {
+                @extend %shrink;
+            }
+        } @else {
+            > * {
+                @extend %cell-#{$position};
+            }
+
+            &.#{$grid-shrink-label} {
+                @extend %shrink;
+            }
+        }
+    }
+}
+
+@mixin grid-cell-alignments() {
+    @include grid-cell-display(false);
+
+    &.left {
+        @extend %cell-left;
+        @include grid-cell-display(left);
+    }
+
+    &.center {
+        @extend %cell-center;
+        @include grid-cell-display(center);
+    }
+
+    &.right {
+        @extend %cell-right;
+        @include grid-cell-display(right);
+    }
+
+    &.top {
+        @extend %cell-top;
+        @include grid-cell-display(top);
+    }
+
+    &.middle {
+        @extend %cell-middle;
+        @include grid-cell-display(middle);
+    }
+
+    &.bottom {
+        @extend %cell-bottom;
+        @include grid-cell-display(bottom);
+    }
+}
+
+//  grid-cell [child element]
+
+@mixin modify-child-cell() {
+    > .#{$grid-cell-label} {
+        @extend %grid-cell;
+        @include grid-cell-alignments();
+        margin: 0;
+    }
+
+    &.#{$grid-gap-label} {
+        &.#{$grid-gap-without-bottom-padding} {
+            // if all cell don't have bottom padding [grid grid-gap ...]
+            > .#{$grid-cell-label} {
+                @include grid-cell-paddings($grid-margin, "no-bottom-padding");
+            }
+        }
+
+        > .#{$grid-cell-label} {
+            // all cells have bottom padding
+            @include grid-cell-paddings($grid-margin, "false");
+
+            // specific cell have no bottom padding [grid grid-gap > cell ...]
+            &.#{$grid-gap-without-bottom-padding} {
+                @include grid-cell-paddings($grid-margin, "no-bottom-padding");
+            }
+        }
+    }
+
+    &.#{$grid-flex-label} {
+        > .#{$grid-cell-label} {
+            @include grid-cell-display(flex);
+        }
+    }
+}
+
+//
+//
+//
+//
+// cell calculation [for optional width attributes]
+
+// sass-lint:disable space-around-operator
+@mixin grid-child-width($resolution-breakepoint) {
+    flex: 0 0 (100 / $grid-max-column) * $resolution-breakepoint +%;
+    -webkit-box-flex: 0 0 (100 / $grid-max-column) * $resolution-breakepoint +%;
+    -moz-box-flex: 0 0 (100 / $grid-max-column) * $resolution-breakepoint +%;
+    -webkit-flex: 0 0 (100 / $grid-max-column) * $resolution-breakepoint +%;
+    -ms-flex: 0 0 (100 / $grid-max-column) * $resolution-breakepoint +%;
+}

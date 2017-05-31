@@ -1,0 +1,105 @@
+@import "grid.flexgrid";
+
+$preview-background-color: #add8e6 !default;
+$preview-nested-background-color: #f08080 !default;
+$wrap-container-color: rgb(255, 255, 255) !default;
+
+// grid system preview [demo]
+
+// represent your content embed in grid class [placeholder]
+
+.grid-demo {
+    margin-top: 50px;
+
+    .grid-preview {
+        // use this shrinked element as your
+        // content placeholder in the grid-cell
+        display: inline-block;
+        background-color: $preview-background-color;
+        padding: 4 * $base-unit;
+        width: auto;
+        text-align: center;
+
+        &-full {
+            // use this 100% width element as your
+            // content placeholder in the grid cell
+            display: block;
+            background-color: $preview-background-color;
+            padding: 4 * $base-unit;
+            width: 100%;
+            text-align: center;
+        }
+
+        &.bx-wrap-container {
+            background-color: $wrap-container-color;
+
+            h1 {
+                margin-top: 0;
+                padding-top: 10px;
+            }
+
+            &::after {
+                position: fixed;
+                bottom: 8.0rem;
+                left: 2.6rem;
+                background-repeat: no-repeat;
+                background-size: 16px;
+                padding-top: 1px;
+                padding-left: 22px;
+                height: 16px;
+                text-align: right;
+                content: "your preview";
+                //background-image: url('/assets/favicon/favicon-96x96.png');
+            }
+        }
+
+        .#{$grid-label} {
+            .#{$grid-label} {
+                .grid-preview,
+                .grid-preview-full {
+                    background-color: $preview-nested-background-color;
+                }
+            }
+        }
+    }
+
+    .grid-preview-no-padding {
+        padding: 0;
+
+        img {
+            margin-bottom: -0.7rem;
+        }
+    }
+}
+
+// test heights to check alignments and flex [grid or grid-cell]
+
+.grid-some-height-xl {
+    min-height: 550px;
+}
+
+.grid-some-height-l {
+    min-height: 250px;
+}
+
+.grid-some-height-s {
+    min-height: 120px;
+}
+
+// some fancy grid-cell placeholder transform
+
+.grid-demo-mod-1 {
+    transform: rotate(12deg);
+    // Chrome, Safari, Opera
+    -webkit-transform: rotate(12deg);
+    // IE 9
+    -ms-transform: rotate(12deg);
+}
+
+.grid-demo-mod-2 {
+    transform: rotate(-4deg);
+    // Chrome, Safari, Opera
+    -webkit-transform: rotate(-4deg);
+    // IE 9
+    -ms-transform: rotate(-4deg);
+}

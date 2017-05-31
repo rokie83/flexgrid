@@ -1,0 +1,70 @@
+// grid system
+@import "flexgrid.placeholder";
+@import "breakpoints.mixin";
+
+$container-wrapper-margin: 0 auto;
+
+.#{$grid-label} {
+    @extend %grid;
+    @include grid-alignments();
+
+    &.#{$grid-gap-label} {
+        @extend %grid-gap;
+    }
+
+    &.#{$grid-flex-label} {
+        @extend %grid-flex;
+    }
+    // child element
+    @include modify-child-cell();
+}
+
+//  calc column width
+//  all children [grid-cell] will be identical in width
+//  when the classes are set on the [grid] element
+
+//  classes set at [grid-cell] will ignore the parent
+//  [grid] added classes
+
+@for $i from 1 through length($grid-breakpoints) { // [each breakpoint]
+    $resolution: nth($grid-breakpoints, $i);
+    $resolution-label: nth($resolution, 1);
+    $resolution-breakpoint: nth($resolution, 2);
+    @for $a from 1 to ($grid-max-column + 1) { // [each column]
+        //  [grid]
+        .#{$resolution-label}#{$a}[class^="#{$grid-label}"]:not([class*="#{$grid-cell-label}"]) {
+            @include media-breakpoint-up($resolution-label) {
+                > [class^="#{$grid-cell-label}"] {
+                    @include grid-child-width($a);
+                }
+            }
+        }
+
+        // [cell]
+        div[class^="#{$grid-label}"]:not([class*="#{$grid-cell-label}"]) {
+            @include media-breakpoint-up($resolution-label) {
+                > .#{$resolution-label}#{$a}[class^="#{$grid-cell-label}"] {
+                    @include grid-child-width($a);
+                }
+            }
+        }
+    }
+}
+
+// container (wrapper) width
+
+@for $i from 1 through length($container-max-widths) { // [each breakpoint]
+    $resolution: nth($container-max-widths, $i);
+    $resolution-label: nth($resolution, 1);
+    $resolution-breakpoint: nth($resolution, 2);
+    @include media-breakpoint-up($resolution-label) {
+        .#{$grid-wrapper} {
+            margin: $container-wrapper-margin;
+            width: $resolution-breakpoint;
+        }
+    }
+
+    .#{$grid-wrapper} {
+        min-width: $container-min-width;
+    }
+}
