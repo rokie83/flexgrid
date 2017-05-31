@@ -124,7 +124,7 @@ gulp.task('write-changelog', () => {
 gulp.task('commit-changes', () => {
     return gulp.src('.')
         .pipe(git.add())
-        .pipe(git.commit(`[PRERELEASE] ${getPackageJsonVersion()}`));
+        .pipe(git.commit(`[RELEASE] ${getPackageJsonVersion()}`));
 });
 
 /**
