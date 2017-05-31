@@ -1,5 +1,5 @@
-<a name="0.1.0"></a>
-# 0.1.0 (2017-05-31)
+<a name="0.0.4"></a>
+## 0.0.4 (2017-05-31)
 
 
 ### Bug Fixes
@@ -11,6 +11,8 @@
 
 ### Features
 
+* **gulp:** Added git and error handling ([62ff86b](https://github.com/rokie83/flexgrid/commit/62ff86b))
+* **gulp:** Added linting and publishing tasks ([7524a82](https://github.com/rokie83/flexgrid/commit/7524a82))
 * **gulp:** Added semVer tasks and changes ([6ce63c2](https://github.com/rokie83/flexgrid/commit/6ce63c2))
 * **setup:** Added CHANGELOG.md ([14c8479](https://github.com/rokie83/flexgrid/commit/14c8479))
 

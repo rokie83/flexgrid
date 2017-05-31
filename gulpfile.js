@@ -79,21 +79,6 @@ gulp.task('update-packagejson', () => {
     }
 });
 
-/**
- * Generate changelog based on the
- * conventional changelog package (https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md)
- */
-gulp.task('write-changelog', () => {
-    return gulp.src('CHANGELOG.md', {
-        buffer: false
-    })
-        .pipe(conventionalChangelog({
-            pkg: {path: rootDir},
-            preset: 'angular',
-            releaseCount: 0,
-        }))
-        .pipe(gulp.dest('./'));
-});
 
 /**
  *  Deletes the dist directory
@@ -114,8 +99,24 @@ gulp.task('copy-files', () => {
  * Publish package to npm
  */
 gulp.task('npm-publish', shell.task([
-    'cd dist && npm publish --access=public"'
+    'cd dist && npm publish --access=public'
 ]));
+
+/**
+ * Generate changelog based on the
+ * conventional changelog package (https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md)
+ */
+gulp.task('write-changelog', () => {
+    return gulp.src('CHANGELOG.md', {
+        buffer: false
+    })
+        .pipe(conventionalChangelog({
+            pkg: {path: rootDir},
+            preset: 'angular',
+            releaseCount: 0,
+        }))
+        .pipe(gulp.dest('./'));
+});
 
 /**
  * Commit changes for the release
@@ -164,10 +165,10 @@ gulp.task('release', () => {
     runSequence(
         'validate',
         'update-packagejson',
-        'write-changelog',
         'clean',
         'copy-files',
         'npm-publish',
+        'write-changelog',
         'commit-changes',
         'create-new-tag',
         'push-changes',
