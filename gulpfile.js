@@ -3,6 +3,7 @@ const del = require('del');
 const gulp = require('gulp');
 const bump = require('gulp-bump');
 const git = require('gulp-git');
+const gutil = require("gulp-util");
 const argv = require('yargs').argv;
 const runSequence = require('run-sequence');
 const conventionalChangelog = require('gulp-conventional-changelog');
@@ -62,6 +63,11 @@ gulp.task('update-packagejson', () => {
         return gulp.src(`${rootDir}/package.json`)
             .pipe(bump({type: semRelease()}))
             .pipe(gulp.dest(rootDir));
+    } else {
+        throw new gutil.PluginError({
+            plugin: 'semRelease()',
+            message: 'A SemVer Release Type was not provided!'
+        })
     }
 });
 
@@ -96,12 +102,55 @@ gulp.task('copy-files', () => {
         .pipe(gulp.dest('dist'));
 });
 
+/**
+ * Commit changes for the release
+ */
+gulp.task('commit-changes', () => {
+    return gulp.src('.')
+        .pipe(git.add())
+        .pipe(git.commit(`[PRERELEASE] ${getPackageJsonVersion()}`));
+});
+
+/**
+ * Read new release version from package.json
+ * and push version tag to master branch
+ */
+gulp.task('create-new-tag', (cb) => {
+    let version = getPackageJsonVersion();
+    git.tag(version, 'Created Tag for version: ' + version, (error) => {
+        if (error) {
+            return cb(error);
+        }
+    });
+    return git.push('origin', 'master', {args: '--tags'}, cb);
+});
+
+/**
+ * Push changes to master branch
+ */
+gulp.task('push-changes', (cb) => {
+    return git.push('origin', 'master', cb);
+});
+
+gulp.task('finished', () => {
+    console.log(`
+    
+    🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉   You just successfully released ${getPackageJsonVersion()}   🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉
+
+    `);
+});
+
+
 gulp.task('release', () => {
     runSequence(
         'update-packagejson',
         'write-changelog',
         'clean',
-        'copy-files'
+        'copy-files',
+        'commit-changes',
+        'create-new-tag',
+        'push-changes',
+        'finished'
     )
 });
 
