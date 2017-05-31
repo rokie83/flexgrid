@@ -75,7 +75,7 @@ const conventionalChangelog = require('gulp-conventional-changelog');
  */
 gulp.task('write-changelog', () => {
     return gulp.src('CHANGELOG.md', {
-        read: false
+        buffer: false
     })
         .pipe(conventionalChangelog({
             preset: 'angular',
