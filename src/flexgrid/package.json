@@ -7,5 +7,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/rokie83/flexgrid"
-    }
+    },
+    "keywords": [
+        "bexio",
+        "flexgrid"
+    ]
 }

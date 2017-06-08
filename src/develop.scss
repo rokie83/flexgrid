@@ -1,5 +1,7 @@
 // Overriding default flexgrid variables
 $container-min-width: 53rem;
 
-@import "flexgrid/grid-demo";
 @import "flexgrid/flexgrid";
+
+// For demo and development only
+@import "flexgrid/grid-demo";

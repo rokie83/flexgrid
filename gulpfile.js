@@ -8,6 +8,9 @@ const gutil = require("gulp-util");
 const argv = require('yargs').argv;
 const runSequence = require('run-sequence');
 const conventionalChangelog = require('gulp-conventional-changelog');
+const webserver = require('gulp-webserver');
+const autoprefixer = require('gulp-autoprefixer');
+const sass = require('gulp-sass');
 
 const rootDir = './src/flexgrid';
 
@@ -60,7 +63,7 @@ let getPackageJsonVersion = () => {
  * Execute linting and testing tasks to validate the package
  */
 gulp.task('validate', shell.task([
-    'npm run scss-lint'
+    'npm run validate'
 ]));
 
 /**
@@ -171,4 +174,37 @@ gulp.task('release', () => {
 });
 
 gulp.task('create-package', ['release']);
+
+/**
+ * A lightweight web server
+ */
+gulp.task('webserver', () => {
+    gulp.src('./src')
+        .pipe(webserver({
+            fallback: 'index.html',
+            livereload: true,
+            open: true
+        }));
+});
+
+/**
+ * Compiling scss to css
+ */
+gulp.task('scss', function () {
+    return gulp.src('./src/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer())
+        .pipe(gulp.dest('./src/css'));
+});
+
+/**
+ * Watch scss files for changes
+ */
+gulp.task('scss:watch', function () {
+    gulp.watch('./src/**/*.scss', ['scss']);
+});
+
+gulp.task('develop', ['webserver', 'scss', 'scss:watch']);
+
+gulp.task('build', ['clean', 'copy-files']);
 

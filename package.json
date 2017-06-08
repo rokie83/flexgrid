@@ -1,5 +1,5 @@
 {
-    "name": "bexio-library",
+    "name": "bexio-flexgrid-development",
     "license": "MIT",
     "author": "bexio AG <npm@bexio.com> (https://www.bexio.com)",
     "contributors": [
@@ -24,62 +24,23 @@
         "type": "git",
         "url": "https://github.com/rokie83/flexgrid"
     },
-    "keywords": [
-        "bexio",
-        "library"
-    ],
-    "angular-cli": {},
     "scripts": {
-        "validate": "npm run format && npm run scss-lint && npm run lint && ng test --single-run=true",
-        "build": "rm -rf dist && gulp create-packages",
-        "build-prod": "npm run validate && npm run build",
-        "publish-common": "cd src/common && npm version patch && cd ../../ && npm run build-prod && cd dist/common && npm publish --access=public",
-        "publish-design": "cd src/design && npm version patch && cd ../../ && npm run build-prod && cd dist/design && npm publish --access=public",
-        "publish-flexgrid": "cd src/flexgrid && npm version patch && cd ../../ && npm run build-prod && cd dist/flexgrid && npm publish --access=public",
-        "publish-material-custom": "cd src/material-custom && npm version patch && cd ../../ && npm run build-prod && cd dist/material-custom && npm publish --access=public",
-        "serve": "ng serve --port 4300",
-        "lint": "ng lint",
-        "test": "ng test",
-        "test-ci": "ng test --single-run=true",
-        "coverage": "ng test --code-coverage --single-run=true",
-        "e2e": "ng e2e",
-        "format": "clang-format -i -style=file --glob=src/**/*.ts",
+        "serve": "gulp develop",
+        "build": "gulp build",
+        "validate": "npm run scss-lint",
         "scss-lint": "sass-lint -c -v --max-warnings 0"
     },
-    "dependencies": {
-        "@angular/common": "4.1.0",
-        "@angular/compiler": "4.1.0",
-        "@angular/core": "4.1.0",
-        "@angular/forms": "4.1.0",
-        "@angular/http": "4.1.0",
-        "@angular/material": "2.0.0-beta.3",
-        "@angular/platform-browser": "4.1.0",
-        "@angular/platform-browser-dynamic": "4.1.0",
-        "@angular/router": "4.1.0",
-        "core-js": "2.4.1",
-        "validator": "7.0.0",
-        "zone.js": "0.8.9"
-    },
     "devDependencies": {
-        "@angular/cli": "1.0.1",
-        "@angular/compiler-cli": "4.1.0",
-        "@types/escape-string-regexp": "0.0.30",
-        "@types/hammerjs": "2.0.34",
-        "@types/jasmine": "2.5.47",
-        "@types/node": "7.0.14",
-        "clang-format": "1.0.49",
-        "codelyzer": "3.0.0",
         "del": "2.2.2",
         "gulp": "3.9.1",
-        "gulp-shell": "0.6.3",
+        "gulp-autoprefixer": "4.0.0",
         "gulp-bump": "2.7.0",
         "gulp-conventional-changelog": "1.1.3",
         "gulp-git": "2.3.0",
+        "gulp-sass": "3.1.0",
+        "gulp-shell": "0.6.3",
+        "gulp-webserver": "0.9.1",
         "run-sequence": "1.2.2",
-        "sass-lint": "1.10.2",
-        "style-loader": "0.16.1",
-        "ts-node": "3.0.2",
-        "tslint": "5.1.0",
-        "typescript": "2.2.2"
+        "sass-lint": "1.10.2"
     }
 }
