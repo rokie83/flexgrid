@@ -1,3 +1,8 @@
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/rokie83/flexgrid/compare/0.0.5...0.0.6) (2017-06-08)
+
+
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/rokie83/flexgrid/compare/0.0.4...0.0.5) (2017-05-31)
 
