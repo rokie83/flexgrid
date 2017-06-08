@@ -27,7 +27,9 @@
     "scripts": {
         "serve": "gulp develop",
         "build": "gulp build",
-        "release": "gulp release",
+        "patch-release": "gulp release --type=patch",
+        "minor-release": "gulp release --type=minor",
+        "major-release": "gulp release --type=major",
         "validate": "npm run scss-lint",
         "scss-lint": "sass-lint -c -v --max-warnings 0"
     },

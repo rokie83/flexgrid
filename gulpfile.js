@@ -173,8 +173,6 @@ gulp.task('release', () => {
     )
 });
 
-gulp.task('create-package', ['release']);
-
 /**
  * A lightweight web server
  */

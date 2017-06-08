@@ -14,13 +14,9 @@ Run `npm run validate` for a quick check if the artifacts, that will be stored i
 
 Run `npm run build` to preview the artifacts in a dist directory.
 
-## Build for production
+## Release the artifact to [npm](https://www.npmjs.com/)
 
-Run `npm run build-prod` to have the artifacts ready to be published to [npm](https://www.npmjs.com/). This task will execute `npm run validate` and `npm run build`.
-
-## Release the artifacts to [npm](https://www.npmjs.com/)
-
-Run `npm run deploy` to patch-increment the version and publish the artifacts to npm without the dist directory.
+Run `npm run patch-release`, `npm run minor-release` or `npm run major-release` to increment the version and publish the artifacts to npm. A CHANGELOG will be generated on the fly.
 
 
 ## License
